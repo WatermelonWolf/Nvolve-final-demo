@@ -17,6 +17,15 @@ import androidx.core.app.NotificationCompat
 import androidx.core.content.getSystemService
 import androidx.core.view.get
 import kotlinx.android.synthetic.main.activity_notification_screen.*
+import android.R.id.edit
+import android.content.SharedPreferences.Editor
+import android.content.SharedPreferences
+import androidx.core.app.ComponentActivity
+import androidx.core.app.ComponentActivity.ExtraData
+import androidx.core.content.ContextCompat.getSystemService
+import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+
+
 
 class NotificationScreen : AppCompatActivity() {
 
@@ -43,6 +52,15 @@ class NotificationScreen : AppCompatActivity() {
         val BlueKeyNot2 = arrayOf("New Student Welcoming", "5/20/2020 - Occurring outside of the Pavillion at 1:00pm, Bring Villanova Clothes and smiles")
         var id = 1
 
+        val pref = applicationContext.getSharedPreferences("MyPref", 0)
+        val editor = pref.edit()
+        var testing=""+(pref.getString("bluekeyJoin", null))
+        var powerJoin = ""+(pref.getString("powerJoin", null))
+        var studentinvolvJoin = ""+(pref.getString("studentinvolvJoin", null))
+        var prideJoin = ""+(pref.getString("prideJoin", null))
+        var bluekeyJoin = ""+(pref.getString("bluekeyJoin", null))
+
+        Tester.text=testing
 
         //Currently set to activate a push notification one at a time
         show.setOnClickListener {
@@ -109,28 +127,60 @@ class NotificationScreen : AppCompatActivity() {
             }
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long){
                 if (options.get(position).equals("Office of Student Involvement")){
-                    FirstTitle.text=""+StudentInvNot1[0]
-                    FirstDescription.text=""+StudentInvNot1[1]
-                    SecondTitle.text=""+StudentInvNot2[0]
-                    SecondDescription.text=""+StudentInvNot2[1]
+                    if (studentinvolvJoin!="yes"){
+                        FirstTitle.text=""
+                        FirstDescription.text=""
+                        SecondTitle.text=""
+                        SecondDescription.text=""
+                    }
+                    else {
+                        FirstTitle.text = "" + StudentInvNot1[0]
+                        FirstDescription.text = "" + StudentInvNot1[1]
+                        SecondTitle.text = "" + StudentInvNot2[0]
+                        SecondDescription.text = "" + StudentInvNot2[1]
+                    }
                 }
                 if (options.get(position).equals("Pride")){
-                    FirstTitle.text=""+PrideNot1[0]
-                    FirstDescription.text=""+PrideNot1[1]
-                    SecondTitle.text=""+PrideNot2[0]
-                    SecondDescription.text=""+PrideNot2[1]
+                    if (prideJoin!="yes"){
+                        FirstTitle.text=""
+                        FirstDescription.text=""
+                        SecondTitle.text=""
+                        SecondDescription.text=""
+                    }
+                    else {
+                        FirstTitle.text = "" + PrideNot1[0]
+                        FirstDescription.text = "" + PrideNot1[1]
+                        SecondTitle.text = "" + PrideNot2[0]
+                        SecondDescription.text = "" + PrideNot2[1]
+                    }
                 }
                 if (options.get(position).equals("POWER")){
-                    FirstTitle.text=""+POWERNot1[0]
-                    FirstDescription.text=""+POWERNot1[1]
-                    SecondTitle.text=""+POWERNot2[0]
-                    SecondDescription.text=""+POWERNot2[1]
+                    if (powerJoin!="yes"){
+                        FirstTitle.text=""
+                        FirstDescription.text=""
+                        SecondTitle.text=""
+                        SecondDescription.text=""
+                    }
+                    else {
+                        FirstTitle.text = "" + POWERNot1[0]
+                        FirstDescription.text = "" + POWERNot1[1]
+                        SecondTitle.text = "" + POWERNot2[0]
+                        SecondDescription.text = "" + POWERNot2[1]
+                    }
                 }
                 if (options.get(position).equals("Blue Key Society")){
-                    FirstTitle.text=""+BlueKeyNot1[0]
-                    FirstDescription.text=""+BlueKeyNot1[1]
-                    SecondTitle.text=""+BlueKeyNot2[0]
-                    SecondDescription.text=""+BlueKeyNot2[1]
+                    if (bluekeyJoin!="yes"){
+                        FirstTitle.text=""
+                        FirstDescription.text=""
+                        SecondTitle.text=""
+                        SecondDescription.text=""
+                    }
+                    else {
+                        FirstTitle.text = "" + BlueKeyNot1[0]
+                        FirstDescription.text = "" + BlueKeyNot1[1]
+                        SecondTitle.text = "" + BlueKeyNot2[0]
+                        SecondDescription.text = "" + BlueKeyNot2[1]
+                    }
                 }
             }
         }

@@ -1,5 +1,6 @@
 package com.example.nvolve
 
+import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
@@ -8,6 +9,18 @@ import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import kotlinx.android.synthetic.main.activity_explore.*
 import java.util.*
+import android.content.SharedPreferences
+import androidx.core.app.ComponentActivity
+import androidx.core.app.ComponentActivity.ExtraData
+import androidx.core.content.ContextCompat.getSystemService
+import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+import android.content.SharedPreferences.Editor
+import androidx.core.content.ContextCompat.getSystemService
+import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+
+
+
+
 
 class Explore : AppCompatActivity() {
 
@@ -32,6 +45,11 @@ class Explore : AppCompatActivity() {
 
         val queueSpot = intent.getStringExtra("queueSpot")
         val SearchResult = intent.getStringExtra("SearchResult")
+
+        var studentinvolvJoin="no"
+        var powerJoin="no"
+        var prideJoin="no"
+        var bluekeyJoin="no"
 
 
         fun updateInfo(queue: Int): Unit {
@@ -86,8 +104,30 @@ class Explore : AppCompatActivity() {
         updateInfo(queue.peek())
         StackInfo.text=("")
 
-        //Joins current club, if hooked up to a backend system, joining a club would alert the organization and then allow notifications to be sent to the device from the backend
+        //Joins current club and displays the notifications for only the clubs you have joined
         JoinButton.setOnClickListener {
+
+            val pref = applicationContext.getSharedPreferences("MyPref", 0) // 0 - for private mode
+            val editor = pref.edit()
+
+            if(queue.peek()==1){
+                studentinvolvJoin="yes"
+            }
+            if(queue.peek()==2){
+                powerJoin="yes"
+            }
+            if(queue.peek()==1){
+                prideJoin="yes"
+            }
+            if(queue.peek()==1){
+                bluekeyJoin="yes"
+            }
+            editor.putString("studentinvolvJoin", studentinvolvJoin)
+            editor.putString("powerJoin", powerJoin)
+            editor.putString("prideJoin", prideJoin)
+            editor.putString("bluekeyJoin", bluekeyJoin)
+            editor.apply()
+
             if(queue.peek()==null){
                 StackInfo.text=("Check Back Soon To See If Any New Clubs Are Added")
             }
